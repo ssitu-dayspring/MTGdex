@@ -11,23 +11,38 @@ import * as page from './actions/main-page';
 @Component({
   selector: 'nav-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: require('./nav-bar.component.html')
+  template: require('./nav-bar.component.html'),
+  styles: [require('./nav-bar.component.scss')]
 })
 export class NavBarComponent {
   @Input() readOnly: boolean = false;
   pageState$: Observable<fromMainPage.State>;
-  private isHome: boolean;
-  private isAbout: boolean;
-  private isContact: boolean;
+
+  private path: string;
+  private urlDefinitions = [
+    { key: 'home', url: '/home' },
+    { key: 'about', url: '/about' },
+    { key: 'contact', url: '/contact' },
+  ]
+  private urls: any;
+  private active: any;
 
   constructor(private store: Store<fromRoot.State>, private $log: Logger) {
     this.pageState$ = store.select(fromRoot.getMainPageState);
 
+    this.urls = {};
+    this.active = {};
+    this.urlDefinitions.forEach(value => {
+      this.urls[value.key] = value.url;
+      this.active[value.key] = false;
+    });
+
     store.select(fromRoot.getRouterPath).subscribe((path) => {
       console.log(path);
-      this.isHome = (path === '/home');
-      this.isAbout = (path === '/about');
-      this.isContact = (path === '/contact');
+      this.path = path;
+      this.urlDefinitions.forEach(value => {
+        this.active[value.key] = (path === value.url);
+      });
     });
 
     this.pageState$.subscribe((state) => {
@@ -35,17 +50,7 @@ export class NavBarComponent {
     });
   }
 
-  goHome(): void {
-      this.store.dispatch(go(['/home']));
-  }
-  goAbout(): void {
-      this.store.dispatch(go(['/about']));
-  }
-  goContact(): void {
-      this.store.dispatch(go(['/contact']));
-  }
-
-  clickEdit(): void {
-    this.store.dispatch(new page.EditPageAction());
+  private go(urlName: string): void {
+    this.store.dispatch(go([this.urls[urlName]]));
   }
 }

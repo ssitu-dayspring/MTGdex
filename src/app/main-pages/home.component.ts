@@ -25,7 +25,12 @@ export class HomeComponent {
     });
   }
 
-  clickEdit() {
-    this.store.dispatch(new page.EditPageAction());
+  addScores(value: string): boolean {
+    this.$log.debug('Add Scores = "' + value + '"');
+    return false;
+  }
+  resetScores(): boolean {
+    this.$log.debug('Reset Scores');
+    return false;
   }
 }
