@@ -19,7 +19,7 @@ export class NavBarComponent {
   pageState$: Observable<fromMainPage.State>;
 
   private path: string;
-  private urlDefinitions = [
+  private urlDefinitions: {key: string, url: string}[] = [
     { key: 'home', url: '/home' },
     { key: 'about', url: '/about' },
     { key: 'contact', url: '/contact' },

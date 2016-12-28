@@ -4,6 +4,7 @@ import { Logger } from 'angular2-logger/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
+import { emailMatcher } from '../form-validators/email-matcher';
 import * as fromRoot from '../reducers';
 import * as fromMainPage from '../reducers/main-page';
 import * as page from '../actions/main-page';
@@ -41,7 +42,7 @@ export class HomeComponent implements OnInit {
       account: this.fb.group({
         email: ['', Validators.required],
         confirm: ['', Validators.required]
-      })
+      }, { validator: emailMatcher })
     });
   }
 
@@ -51,6 +52,16 @@ export class HomeComponent implements OnInit {
         return this.user.get(name).hasError(error) && this.user.get(name).touched;
       } else {
         return this.user.get(name).errors && this.user.get(name).touched;
+      }
+    } else if (name === 'account') {
+      if (error) {
+        return this.user.get('account').hasError(error) &&
+          this.user.get('account').get('email').touched &&
+          this.user.get('account').get('confirm').touched;
+      } else {
+        return this.user.get('account').errors &&
+          this.user.get('account').get('email').touched &&
+          this.user.get('account').get('confirm').touched;
       }
     } else {
       if (error) {

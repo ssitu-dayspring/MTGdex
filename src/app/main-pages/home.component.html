@@ -16,7 +16,7 @@
     </div>
   </div>
   <div formGroupName="account">
-    <div class="form-group" [ngClass]="{'has-error': hasError('email')}">
+    <div class="form-group" [ngClass]="{'has-error': hasError('email') || hasError('account')}">
       <label class="control-label">
         <span>Email address</span>
         <input
@@ -29,7 +29,7 @@
         Email is required
       </div>
     </div>
-    <div class="form-group" [ngClass]="{'has-error': hasError('confirm')}">
+    <div class="form-group" [ngClass]="{'has-error': hasError('confirm') || hasError('account')}">
       <label class="control-label">
         <span>Confirm address</span>
         <input
@@ -41,10 +41,11 @@
       <div class="help-block" *ngIf="hasError('confirm', 'required')">
         You need to confirm your email
       </div>
+      <div class="help-block" *ngIf="hasError('account', 'nomatch')">
+        You need to confirm your email
+      </div>
     </div>
   </div>
   <button type="submit" class="btn btn-default" [disabled]="user.invalid">Sign up</button>
+<!-- {{ user.value | json }} -->
 </form>
-<pre>
-  {{ user.value | json }}
-</pre>
