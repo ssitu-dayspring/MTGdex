@@ -22,8 +22,8 @@ export class NavBarComponent {
   private urlDefinitions: {key: string, url: string}[] = [
     { key: 'home', url: '/home' },
     { key: 'about', url: '/about' },
-    { key: 'contact', url: '/contact' },
-  ]
+    { key: 'contact', url: '/contact' }
+  ];
   private urls: any;
   private active: any;
 

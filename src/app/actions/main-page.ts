@@ -5,7 +5,7 @@ export const ACTION = {
   EDIT_PAGE:  type('[Main] Edit Page'),
 
   OPEN:       type('[Main] Open'),
-  CLOSE:      type('[Main] Close'),
+  CLOSE:      type('[Main] Close')
 };
 
 export class EditPageAction implements Action {

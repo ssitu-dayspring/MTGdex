@@ -14,7 +14,7 @@ export interface User {
   account: {
     email: string;
     confirm: string;
-  }
+  };
 }
 
 @Component({
