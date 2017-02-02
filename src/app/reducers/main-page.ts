@@ -22,7 +22,7 @@ export function reducer(state = initialState, action: mainPage.Actions): State {
     case mainPage.ACTION.OPEN:
       return {
         readOnly: state.readOnly,
-        open: action.payload
+        open: (<mainPage.OpenAction>action).payload
       };
     case mainPage.ACTION.CLOSE:
       return {

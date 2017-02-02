@@ -11,22 +11,22 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.ts', '.js']
+    extensions: ['.ts', '.js']
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.ts$/,
         loaders: ['awesome-typescript-loader', 'angular2-template-loader']
       },
       {
         test: /\.html$/,
-        loader: 'html'
+        loader: 'html-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-        loader: 'file?name=assets/[name].[hash].[ext]'
+        loader: 'file-loader?name=assets/[name].[hash].[ext]'
       },
       {
         test: /\.css$/,
@@ -34,7 +34,15 @@ module.exports = {
           /node_modules/,
           helpers.root('src', 'app')
         ],
-        loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader', 
+          loader: [
+            {
+              loader: 'css-loader',
+              options: {sourceMap: true }
+            }
+          ]
+        })
       },
       {
         test: /\.scss$/,
@@ -42,22 +50,33 @@ module.exports = {
           /node_modules/,
           helpers.root('src', 'app')
         ],
-        loader: ExtractTextPlugin.extract(
-          'style', 
-          'css?sourceMap' +
-          '!sass?outputStyle=expanded&sourceMap'
-        )
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader', 
+          loader: [
+            {
+              loader: 'css-loader',
+              options: {sourceMap: true }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                outputStyle: 'expanded',
+                sourceMap: true 
+              }
+            }
+          ]
+        })
       },
 
       {
         test: /\.css$/,
         include: helpers.root('src', 'app'),
-        loader: 'raw'
+        loader: 'raw-loader'
       },
       {
         test: /\.scss$/,
         include: helpers.root('src', 'app'),
-        loader: 'raw!sass'
+        loader: 'raw-loader!sass-loader'
       }
     ]
   },
@@ -69,6 +88,13 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       template: 'src/index.html'
-    })
+    }),
+
+    new webpack.ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      './src',
+      {} // a map of your routes 
+    )
   ]
 };

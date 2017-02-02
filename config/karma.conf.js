@@ -1,7 +1,7 @@
 var webpackConfig = require('./webpack.test');
 
 module.exports = function (config) {
-  var _config = {
+  config.set({
     basePath: '',
 
     frameworks: ['jasmine'],
@@ -31,7 +31,5 @@ module.exports = function (config) {
     autoWatch: false,
     browsers: ['PhantomJS'],
     singleRun: true
-  };
-
-  config.set(_config);
+  });
 };
