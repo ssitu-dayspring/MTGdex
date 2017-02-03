@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import * as mainPage from '../actions/main-page';
+import * as mainPage from './main-page.actions';
 
 export interface State {
   readOnly: boolean;

@@ -8,12 +8,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
-import { MainPagesModule } from './main-pages/main-pages.module';
+import { MainPagesModule } from './components/main-pages/main-pages.module';
 
-import { AppComponent } from './app.component';
-import { NavBarComponent } from './nav-bar.component';
+import { AppComponent } from './components/app.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
-import { reducer } from './reducers';
+import { reducer } from './store';
 
 @NgModule({
   imports: [

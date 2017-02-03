@@ -1,16 +1,15 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Logger } from 'angular2-logger/core';
 import { Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 
-import * as fromRoot from './reducers';
-import * as fromMainPage from './reducers/main-page';
-import * as page from './actions/main-page';
+import * as fromRoot from '../../store';
+import * as fromMainPage from '../../store/main-page/main-page.reducer';
+import * as page from '../../store/main-page/main-page.actions';
 
 @Component({
   selector: 'nav-bar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: require('./nav-bar.component.html'),
   styles: [require('./nav-bar.component.scss')]
 })

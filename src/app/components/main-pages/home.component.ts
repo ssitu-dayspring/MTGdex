@@ -4,10 +4,10 @@ import { Logger } from 'angular2-logger/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { emailMatcher } from '../form-validators/email-matcher';
-import * as fromRoot from '../reducers';
-import * as fromMainPage from '../reducers/main-page';
-import * as page from '../actions/main-page';
+import { emailMatcher } from '../../form-validators/email-matcher';
+import * as fromRoot from '../../store';
+import * as fromMainPage from '../../store/main-page/main-page.reducer';
+import * as page from '../../store/main-page/main-page.actions';
 
 export interface User {
   name: string;
