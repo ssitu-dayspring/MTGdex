@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TideHeight, TideStation } from '../../model/tide-station';
+import { TideHeight, TideStation } from '../../models/tide-station';
 
 @Component({
   selector: 'about',

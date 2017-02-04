@@ -1,4 +1,4 @@
-import * as astro from '../utils/astro';
+import * as astro from './astro';
 
 export interface HarmonicConstituent {
   num: number;
