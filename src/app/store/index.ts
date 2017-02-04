@@ -6,7 +6,7 @@ import { compose } from '@ngrx/core/compose';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { combineReducers } from '@ngrx/store';
 
-import * as fromMainPage from './main-page';
+import * as fromMainPage from './main-page/main-page.reducer';
 
 export interface State {
     mainPage: fromMainPage.State;

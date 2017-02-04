@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import * as mainPage from '../actions/main-page';
+import * as mainPage from './main-page.actions';
 
 export interface State {
   readOnly: boolean;
@@ -22,7 +22,7 @@ export function reducer(state = initialState, action: mainPage.Actions): State {
     case mainPage.ACTION.OPEN:
       return {
         readOnly: state.readOnly,
-        open: action.payload
+        open: (<mainPage.OpenAction>action).payload
       };
     case mainPage.ACTION.CLOSE:
       return {
