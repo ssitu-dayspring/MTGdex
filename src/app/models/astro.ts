@@ -1,6 +1,12 @@
 export const D2R = Math.PI / 180.0;
 export const R2D = 180.0 / Math.PI;
 
+// Most of this is based around Meeus's _Astronomical Algorithms_ 2nd Edition, since it
+// presents reasonably good approximations of all the quantities we require in a
+// clear fashion.  Reluctant to go all out and use VSOP87 unless it can be shown
+// to make a significant difference to the resulting accuracy of harmonic
+// analysis.
+
 /**
  * Convert a sexagesimal angle into decimal degrees
  */
@@ -58,13 +64,15 @@ export function JD(t: Date): number {
 }
 
 /**
- * Meeus formula 11.1
+ * Meeus formula 12.1
+ *  Julian centuries from the Epoch J2000.0 (JD 2451545.0)
  */
 function T(t: Date): number {
   return (JD(t) - 2451545.0) / 36525;
 }
 
-// Meeus formula 21.3
+// Meeus formula 22.3
+//  delta zero (δ)
 // Adjust these coefficients for parameter T rather than U
 const terrestrialObliquityCoefficients = [
    s2d(23, 26, 21.448),
@@ -81,17 +89,18 @@ const terrestrialObliquityCoefficients = [
 ].map((c, i) => c * (1e-2) ** i);
 
 // Not entirely sure about this interpretation, but this is the difference
-// between Meeus formulae 24.2 and 24.3 and seems to work
+// between Meeus formulae 25.2 and 25.3 and seems to work
 const solarPerigeeCoefficients = [
-  280.46645 - 357.52910,
-  36000.76932 - 35999.05030,
-  0.0003032 + 0.0001559,
+  280.46646 - 357.52911,
+  36000.76932 - 35999.05029,
+  0.0003032 + 0.0001537,
   0.00000048
 ];
 
-// Meeus formula 24.2
+// Meeus formula 25.2
+//   geomeric mean longitude of the sun (L zero)
 const solarLongitudeCoefficients = [
-  280.46645,
+  280.46646,
   36000.76983,
   0.0003032
 ];
@@ -101,29 +110,32 @@ const lunarInclinationCoefficients = [
   5.145
 ];
 
-// Meeus formula 45.1
+// Meeus formula 47.1
+//  Lprime
 const lunarLongitudeCoefficients = [
-  218.3164591,
-  481267.88134236,
-  -0.0013268,
+  218.3164477,
+  481267.88123421,
+  -0.0015786,
   1 / 538841.0,
   -1 / 65194000.0
 ];
 
-// Meeus formula 45.7
+// Meeus formula 47.7
+//  Omega (Ω)
 const lunarNodeCoefficients = [
-  125.0445550,
-  -1934.1361849,
-  0.0020762,
-  1 / 467410.0,
+  125.0445479,
+  -1934.1362891,
+  0.0020754,
+  1 / 467441.0,
   -1 / 60616000.0
 ];
 
-// Meeus, unnumbered formula directly preceded by 45.7
+// Meeus, unnumbered formula directly preceded by 47.7
+//  Pi (Π)
 const lunarPerigeeCoefficients = [
-  83.3532430,
-  4069.0137111,
-  -0.0103238,
+  83.3532465,
+  4069.0137287,
+  -0.0103200,
   -1 / 80053.0,
   1 / 18999000.0
 ];
@@ -197,7 +209,7 @@ export class AstronomicalParameters {
   p: AstronomicalParameter;
   N: AstronomicalParameter;
   pp: AstronomicalParameter;
-  ninety: AstronomicalParameter;
+  _90: AstronomicalParameter;
   omega: AstronomicalParameter;
   i: AstronomicalParameter;
   I: AstronomicalParameter;
@@ -213,11 +225,11 @@ export class AstronomicalParameters {
     // some astronomical values (and therefore speeds).
     let polynomials = [
         {name: 's',      coeffs: lunarLongitudeCoefficients},
-        {name: 'h',      coeffs: solarLongitudeCoefficients},
         {name: 'p',      coeffs: lunarPerigeeCoefficients},
         {name: 'N',      coeffs: lunarNodeCoefficients},
+        {name: 'h',      coeffs: solarLongitudeCoefficients},
         {name: 'pp',     coeffs: solarPerigeeCoefficients},
-        {name: 'ninety', coeffs: [90.0]},
+        {name: '_90',    coeffs: [90.0]},
         {name: 'omega',  coeffs: terrestrialObliquityCoefficients},
         {name: 'i',      coeffs: lunarInclinationCoefficients}
     ];

@@ -1,14 +1,53 @@
 import * as astro from './astro';
 
-export interface HarmonicConstituent {
+// Constituent as published by NOAA / NOS / CO-OPS
+export interface PublishedConstituent {
   num: number;
   name: string;
   amp: number;
   phaseDeg: number;
   speedDegPH: number;
-  phaseRad?: number;
-  speedRadPH?: number;
   desc?: string;
+}
+
+export class Constituent {
+  num: number;
+  name: string;
+  amp: number;
+  phaseDeg: number;
+  phaseRad: number;
+  speedDegPH: number;
+  speedRadPH: number;
+  desc: string;
+
+  private static astro_params(a: astro.AstronomicalParameters): astro.AstronomicalParameter[] {
+    return [ a.ths, a.s, a.h, a.p, a.N, a.pp, a._90 ];
+  }
+  private static astro_values(a: astro.AstronomicalParameters): number[] {
+    return Constituent.astro_params(a).map(p => p.value);
+  }
+  private static astro_speeds(a: astro.AstronomicalParameters): number[] {
+    return Constituent.astro_params(a).map(p => p.speed);
+  }
+
+  constructor(data: PublishedConstituent) {
+    this.num = data.num;
+    this.name = data.name;
+    this.desc = data.desc;
+    this.amp = data.amp;
+    this.phaseDeg = data.phaseDeg;
+    this.phaseRad = data.phaseDeg * astro.D2R;
+    this.speedDegPH = data.speedDegPH;
+    this.speedRadPH = data.speedDegPH * astro.D2R;
+  }
+
+//  V(a: astro.AstronomicalParameters): number {
+//
+//  }
+//  speed(a: astro.AstronomicalParameters): number {
+//
+//  }
+
 }
 
 export interface TideHeight {
@@ -17,6 +56,8 @@ export interface TideHeight {
 }
 
 export class TideStation {
+  private constituents: Constituent[];
+
   public static SAN_FRANCISCO(): TideStation {
     let constituents = [
       {num: 0, name: 'Z0', amp: 0, phaseDeg:  0, speedDegPH: 0,
@@ -106,15 +147,11 @@ export class TideStation {
   constructor(
     public id: number,
     public name: string,
-    public constituents: HarmonicConstituent[],
-    radians = false) {
-    this.constituents = this.constituents.filter((c: HarmonicConstituent) => c.amp > 0.0);
-    if (!radians) {
-      this.constituents.forEach((c: HarmonicConstituent) => {
-        c.phaseRad = c.phaseDeg * astro.D2R;
-        c.speedRadPH = c.speedDegPH * astro.D2R;
-      });
-    }
+    constituents: PublishedConstituent[]) {
+
+    constituents = constituents.filter((c: PublishedConstituent) => c.amp > 0.0);
+    this.constituents = constituents.map(c => new Constituent(c));
+
   }
 
   public heightsOnHours(date: Date): TideHeight[] {
@@ -130,9 +167,9 @@ export class TideStation {
   public tideAt(time: Date): number {
     let hour: number = Math.round(time.getTime()) / 3600000;
 
-    return this.constituents.reduce((sum: number, hc: HarmonicConstituent) => {
-      let cosIn = hc.speedRadPH * hour + hc.phaseRad;
-      return sum + hc.amp * Math.cos(cosIn);
+    return this.constituents.reduce((sum: number, c) => {
+      let cosIn = c.speedRadPH * hour + c.phaseRad;
+      return sum + c.amp * Math.cos(cosIn);
     }, 0.0);
   }
 
