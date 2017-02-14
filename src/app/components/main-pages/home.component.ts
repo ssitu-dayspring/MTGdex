@@ -20,8 +20,7 @@ export interface User {
 @Component({
   selector: 'home',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: require('./home.component.html'),
-  styles: [require('./home.component.scss')]
+  template: require('./home.component.html')
 })
 export class HomeComponent implements OnInit {
   user: FormGroup;

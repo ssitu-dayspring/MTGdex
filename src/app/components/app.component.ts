@@ -4,8 +4,7 @@ import '../../sass/styles.scss';
 
 @Component({
   selector: 'my-app',
-  template: require('./app.component.html'),
-  styles: [require('./app.component.scss')]
+  template: require('./app.component.html')
 })
 export class AppComponent {
 

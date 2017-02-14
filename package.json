@@ -1,6 +1,6 @@
 {
   "name": "angular2-starter",
-  "version": "2.4.0",
+  "version": "2.4.7",
   "description": "Angular 2.x starter application.",
   "scripts": {
     "start": "webpack-dev-server --inline --progress --port 3000",
@@ -55,12 +55,12 @@
     "reselect": "^2.5.4",
     "rimraf": "^2.5.2",
     "rxjs": "^5.1.0",
-    "sass-loader": "^4.1.0",
+    "sass-loader": "^6.0.0",
     "style-loader": "^0.13.1",
     "tslint": "^4.4.0",
     "typescript": "^2.1.0",
     "webpack": "^2.2.0",
-    "webpack-dev-server": "^1.16.0",
+    "webpack-dev-server": "^2.0.0",
     "webpack-merge": "^2.6.0",
     "zone.js": "^0.7.0"
   }
