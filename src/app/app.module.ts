@@ -14,19 +14,25 @@ import { AppComponent } from './components/app.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 import { reducer } from './store';
+import {ManaManagerComponent} from "./components/mana-manager/mana-manager.component";
+import {ManaComponent} from "./components/mana/mana.component";
+import {ManaManagerModule} from "./components/mana-manager/mana-manager.module";
 
 @NgModule({
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MainPagesModule,
-    StoreModule.provideStore(reducer),
-    RouterStoreModule.connectRouter(),
-    StoreDevtoolsModule.instrumentOnlyWithExtension()
+        BrowserModule,
+        AppRoutingModule,
+        // MainPagesModule,
+        StoreModule.provideStore(reducer),
+        RouterStoreModule.connectRouter(),
+        StoreDevtoolsModule.instrumentOnlyWithExtension(),
+        //ManaManagerModule
   ],
   declarations: [
-    AppComponent,
-    NavBarComponent
+        AppComponent,
+        NavBarComponent,
+        ManaManagerComponent,
+		ManaComponent
   ],
   bootstrap: [AppComponent],
   providers: [LOG_LOGGER_PROVIDERS]
