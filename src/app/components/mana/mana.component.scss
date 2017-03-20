@@ -1,0 +1,14 @@
+.mana-container {
+    display: flex;
+    align-items: center;
+}
+
+.mana-container > .mana-item:not(:last-child) {
+    margin-right: 10px;
+} 
+
+.glyphicon-plus,
+.glyphicon-minus,
+.glyphicon-repeat {
+    cursor: pointer;
+}

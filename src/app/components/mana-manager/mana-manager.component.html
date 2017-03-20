@@ -1,18 +1,11 @@
 <div class="mana-main">
-    <div class="mana-container"
-         *ngFor="let manaType of ['R', 'G', 'U', 'W', 'B', 'C', 'M']">
-        <div class="mana-item">
+    <div class="row">
+        <div class="col-xs-6"
+             *ngFor="let manaType of ['R', 'G', 'U', 'W', 'B', 'C', 'M']">
+        
             <mana colorType="{{ manaType }}"></mana>
-        </div>
-        <div class="mana-item">
-            <h1 class="mana-count">0</h1>
-        </div>
-
-        <div class="mana-item">
-            <span class="glyphicon glyphicon-plus"></span>
-        </div>
-        <div class="mana-item">
-            <span class="glyphicon glyphicon-minus"></span>
         </div>
     </div>
 </div>
+
+<hr>

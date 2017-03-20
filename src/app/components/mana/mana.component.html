@@ -1,3 +1,22 @@
-<div>
-    <img [src]="getManaSymbol()">
+<div class="mana-container">
+    <img class="mana-item" [src]="getManaSymbol()">
+
+    <div class="mana-item">
+        <h1 class="mana-count">{{ manaLeft }}</h1>
+    </div>
+
+    <div class="mana-item">
+        <span class="glyphicon glyphicon-plus" 
+              (click)="addMana()"></span>
+    </div>
+
+    <div class="mana-item">
+        <span class="glyphicon glyphicon-minus"
+              (click)="spendMana()"></span>
+    </div>
+
+    <div class="mana-item">
+        <span class="glyphicon glyphicon-repeat"
+              (click)="undo()"></span>
+    </div>
 </div>
