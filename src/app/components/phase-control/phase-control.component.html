@@ -1,0 +1,15 @@
+<input class="form-control phase" readonly="readonly" value="{{ getPhase(phaseSelected) }}">
+
+<hr>
+
+<button class="btn btn-default"
+        *ngFor="let phase of phases; let i = index" 
+        (click)="changePhase(i)" 
+        [disabled]="i <= phaseSelected">
+    {{ phase }}
+</button>
+
+<button class="btn btn-danger" 
+        (click)="endTurn()">
+    End Turn
+</button>

@@ -61,9 +61,19 @@ export class ManaComponent {
         this.manaLeft ++;
     }
 
+    unspendAllMana() : void {
+        this.manaLeft = this.manaPool;
+    }
+
     spendMana() : void {
         if (this.manaLeft > 0) {
             this.manaLeft --;
+        }
+    }
+
+    unspendMana() : void {
+        if (this.manaLeft < this.manaPool) {
+            this.manaLeft ++;
         }
     }
 
@@ -74,9 +84,5 @@ export class ManaComponent {
     endTurn() : void {
         this.manaPool = this.getManaTotal();
         this.manaLeft = this.getManaTotal();
-    }
-
-    undo() : void {
-        this.manaLeft = this.manaPool;
     }
 }

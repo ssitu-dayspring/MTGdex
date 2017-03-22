@@ -6,17 +6,22 @@
     </div>
 
     <div class="mana-item">
-        <span class="glyphicon glyphicon-plus" 
-              (click)="addMana()"></span>
+        <span class="glyphicon glyphicon-triangle-top" 
+              (click)="unspendMana()"></span>
     </div>
 
     <div class="mana-item">
-        <span class="glyphicon glyphicon-minus"
+        <span class="glyphicon glyphicon-triangle-bottom"
               (click)="spendMana()"></span>
     </div>
 
     <div class="mana-item">
+        <span class="glyphicon glyphicon-plus"
+              (click)="addMana()"></span>
+    </div>
+
+    <div class="mana-item">
         <span class="glyphicon glyphicon-repeat"
-              (click)="undo()"></span>
+              (click)="unspendAllMana()"></span>
     </div>
 </div>
