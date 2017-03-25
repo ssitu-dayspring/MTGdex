@@ -1,5 +1,10 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input } from "@angular/core";
+import { Store } from "@ngrx/store";
 import { Mana } from "../model/mana";
+
+import * as fromRoot from "../../store";
+import * as manaAction from "../../store/mana/mana.actions";
+
 
 @Component({
     selector: "mana",
@@ -15,7 +20,7 @@ export class ManaComponent {
 
     public manaLeft : number = 0;
 
-    constructor() { }
+    constructor(private store: Store<fromRoot.State>) { }
 	
 	ngOnInit() {
         this.mana = new Mana(this.colorType);
@@ -56,6 +61,11 @@ export class ManaComponent {
     }
 
     addMana() : void {
+        let mana = new Mana("R");
+        mana.addManaTotal();
+
+        // this.store.dispatch(new manaAction.AddAction(mana));
+
         this.mana.addManaTotal();
         this.manaPool ++;
         this.manaLeft ++;

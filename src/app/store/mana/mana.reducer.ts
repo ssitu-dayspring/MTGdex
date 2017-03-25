@@ -2,19 +2,19 @@ import {Mana} from "../../components/model/mana";
 import * as manaActions from "./mana.actions";
 
 export interface State {
-    manaCollection: {};
+    manaCollection: Mana[];
 }
 
 const initialState : State = {
-    manaCollection: {
-        "RED":        new Mana("R"),
-        "GREEN":      new Mana("G"),
-        "BLUE":       new Mana("U"),
-        "WHITE":      new Mana("W"),
-        "BLACK":      new Mana("B"),
-        "COLORLESS":  new Mana("C"),
-        "MULTICOLOR": new Mana("M")
-    }
+    manaCollection: [
+        new Mana("R"),
+        new Mana("G"),
+        new Mana("U"),
+        new Mana("W"),
+        new Mana("B"),
+        new Mana("C"),
+        new Mana("M")
+    ]
 };
 
 
@@ -29,7 +29,21 @@ export function reducer(state = initialState, action: manaActions.Actions) : Sta
     }
 }
 
-function addMana(state: State, payload: any) {
-    let color = payload.color;
-    let mana = state[]
+function addMana(state: State, newManaState: Mana) {
+    let newManaCollection = state.manaCollection.map(
+        (mana: Mana) => {
+            let colorType = newManaState.getColor();
+            if (mana.getColor() === colorType) {
+                let updatedMana = newManaState;
+            } else {
+                return mana;
+            }
+        }
+    );
+
+    let newState = {
+        manaCollection: newManaCollection
+    };
+
+    return newState;
 }
