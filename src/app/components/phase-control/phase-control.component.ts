@@ -30,6 +30,7 @@ export class PhaseControlComponent {
 
     endTurn() : void {
         this.phaseSelected = 0;
+        this.nextTurn();
     }
 
     nextTurn() : void {

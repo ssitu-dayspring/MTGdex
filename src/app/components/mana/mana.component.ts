@@ -1,10 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { Store } from "@ngrx/store";
 import { Mana } from "../model/mana";
-
-import * as fromRoot from "../../store";
-import * as manaAction from "../../store/mana/mana.actions";
-
 
 @Component({
     selector: "mana",
@@ -13,18 +8,14 @@ import * as manaAction from "../../store/mana/mana.actions";
 })
 
 export class ManaComponent {
-    @Input() colorType: string = undefined;
+    //@Input() colorType: string = undefined;
 
-    private mana: Mana = null;
+    @Input() mana: Mana;
+
     private manaPool: number = 0;
-
     public manaLeft : number = 0;
 
-    constructor(private store: Store<fromRoot.State>) { }
-	
-	ngOnInit() {
-        this.mana = new Mana(this.colorType);
-	}
+    constructor() { }
 
     getManaSymbol() : string {
         let manaImg:string = undefined;

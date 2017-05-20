@@ -8,14 +8,18 @@ import { combineReducers } from '@ngrx/store';
 
 import * as fromMainPage from './main-page/main-page.reducer';
 
+import * as fromManaPool from './mana/mana.reducer';
+
 export interface State {
     mainPage: fromMainPage.State;
     router: fromRouter.RouterState;
+    manaPool: fromManaPool.State;
 }
 
 const reducers = {
     mainPage: fromMainPage.reducer,
-    router: fromRouter.routerReducer
+    router: fromRouter.routerReducer,
+    manaPool: fromManaPool.reducer
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
@@ -31,3 +35,7 @@ export function reducer(state: any, action: any) {
 
 export const getRouterPath = (state: State) => state.router.path;
 export const getMainPageState = (state: State) => state.mainPage;
+
+export const getManaPoolState = (state: State) => state.manaPool;
+
+export const getManaPool = createSelector(getManaPoolState, fromManaPool.getManaPool);

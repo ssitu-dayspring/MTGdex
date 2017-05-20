@@ -1,25 +1,36 @@
 import {Mana} from "../../components/model/mana";
 import * as manaActions from "./mana.actions";
+import {Action} from "rxjs/Scheduler";
+import {ManaPool} from "../../components/model/mana-pool";
 
 export interface State {
-    manaCollection: Mana[];
+    manaRed: Mana;
+    manaGreen: Mana;
+    manaBlue: Mana;
+    manaWhite: Mana;
+    manaBlack: Mana;
+    manaColorless: Mana;
+    manaMulti: Mana;
 }
 
 const initialState : State = {
-    manaCollection: [
-        new Mana("R"),
-        new Mana("G"),
-        new Mana("U"),
-        new Mana("W"),
-        new Mana("B"),
-        new Mana("C"),
-        new Mana("M")
-    ]
+    manaRed: undefined,
+    manaGreen: undefined,
+    manaBlue: undefined,
+    manaWhite: undefined,
+    manaBlack: undefined,
+    manaColorless: undefined,
+    manaMulti: undefined
+
 };
 
 
 export function reducer(state = initialState, action: manaActions.Actions) : State {
     switch(action.type) {
+        case manaActions.ACTION.UPDATE_MANA_POOL:
+            return updateManaPool((<manaActions.UpdateManaPoolAction>action).payload);
+        case manaActions.ACTION.REFRESH_MANA_POOL:
+            return state;
         case manaActions.ACTION.ADD:
             return;
         case manaActions.ACTION.REMOVE:
@@ -29,21 +40,16 @@ export function reducer(state = initialState, action: manaActions.Actions) : Sta
     }
 }
 
-function addMana(state: State, newManaState: Mana) {
-    let newManaCollection = state.manaCollection.map(
-        (mana: Mana) => {
-            let colorType = newManaState.getColor();
-            if (mana.getColor() === colorType) {
-                let updatedMana = newManaState;
-            } else {
-                return mana;
-            }
-        }
-    );
-
-    let newState = {
-        manaCollection: newManaCollection
+function updateManaPool(mp: ManaPool): State {
+    return {
+        manaRed: mp.manaRed,
+        manaGreen: mp.manaGreen,
+        manaBlue: mp.manaBlue,
+        manaWhite: mp.manaWhite,
+        manaBlack: mp.manaBlack,
+        manaColorless: mp.manaColorless,
+        manaMulti: mp.manaMulti
     };
-
-    return newState;
 }
+
+export const getManaPool = (state: State) => state;
